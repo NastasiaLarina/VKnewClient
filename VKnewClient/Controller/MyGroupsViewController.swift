@@ -10,15 +10,19 @@ import UIKit
 
 class MyGroupsViewController: UITableViewController {
 
+    
+    // MARK: - Data Sourse
+    
     var allGroups: [String] = []
     var groupFoto: [String] = []
+    
+    // MARK: - Life cicles
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(UINib(nibName: "HeaderForAllGroup", bundle: nil),  forHeaderFooterViewReuseIdentifier: "HeaderForAllGroup")
-        
     }
+    
     // MARK: - Table view
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -71,38 +75,5 @@ class MyGroupsViewController: UITableViewController {
         groupFoto.append(fotoGroup)
         tableView.reloadData()
        }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Hello"
-    }
-    /*
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
-        
-        let label = UILabel()
-        label.textColor = .red
-        label.font = .systemFont(ofSize: 25, weight: .bold)
-        label.text = "Aggsg"
-        label.translatesAutoresizingMaskIntoConstraints = true
-        
-        
-        view.addSubview(label)
-        NSLayoutConstraint.activate([
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        return view
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        50
-    }
-    */
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "HeaderForAllGroup") as? HeaderForAllGroup else { return nil }
-        return headerView
-        
-    }
-    
     
 }

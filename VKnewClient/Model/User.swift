@@ -7,14 +7,20 @@
  import Foundation
 
 struct User {
-    var name: String
+    var firstName: String
+    var lastName: String
     var avatar: String
-    var photos: [String] = []
+    var photos: [String]
+    
+    var fullName: String {
+        return "\(lastName) \(firstName)"
+    }
+    
    // Mark: - Fake
     
     static var randomOne: User {
-        return User(name: Lorem.fullName,
-                    avatar: String(Int.random(in: 1...18)),
+        return User(firstName: Lorem.firstName,
+                    lastName: Lorem.lastName,                    avatar: String(Int.random(in: 1...18)),
                     photos: (1...6).map { _ in String(Int.random(in: 1...18)) }
        )
     }

@@ -7,8 +7,14 @@
 
 import UIKit
 
-class AllGroupsViewController: UITableViewController {
+class AllGroupsViewController: UITableViewController, UISearchBarDelegate {
 
+    // MARK: - Outlets
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    // MARK: - Data Sourse
+    
     let allGroups: [String] = [
         "AUDI group",
         "BMW lovers",
@@ -35,10 +41,11 @@ class AllGroupsViewController: UITableViewController {
         "10.png"
         ]
     
+    
+    // Mark: - Life cycles
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.register(UINib(nibName: "HeaderForAllGroup", bundle: nil),  forHeaderFooterViewReuseIdentifier: "HeaderForAllGroup")
         
     }
 
@@ -61,15 +68,12 @@ class AllGroupsViewController: UITableViewController {
         cell.labelName.text = allGroup
         
         cell.groupView.image = UIImage(named: groupFoto[indexPath.row])
-        
-        //cell.groupView.layer.cornerRadius = 35.0
-        //cell.groupView.clipsToBounds = true
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "HeaderForAllGroup") as? HeaderForAllGroup else { return nil }
-        return headerView
-        
+    // MARK: - UISearchBarDelegate
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(#function)
     }
 }

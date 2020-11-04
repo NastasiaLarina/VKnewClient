@@ -7,109 +7,145 @@
 
 import UIKit
 
-class FreindsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, LetterPickerDelegate {
+class FreindsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, LetterPickerDelegate, UISearchBarDelegate {
     
     
-    let items: [User] = User.randomMany.sorted { $0.name.lowercased() < $1.name.lowercased()
-    }
-    
-    let searchController = UISearchController(searchResultsController: nil
-    )
-    
-    var filtreditems = [String]()
-    
-   // var freindSectionTitles = [String]()
-   // var freindDict = [String: [String]]()
-    
-    
+    // MARK: - Outlets
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var letterPicker: LetterPicker!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+   // MARK: - Data Sourse
+    
+    var sections: [String] = [] // массив букв
+    var allItems: [User] = [] // массив всех друзей
+    var filtredItems: [User] = []
+    var cachedSectionItems: [String: [User]] = [:]
+    
+    // массив возвращает всех друзей для секции с определенным индексом
+    func getItems(for section: Int) -> [User]{
+        let sectionLetter = sections[section]
+        
+        if let sectionItems = cachedSectionItems[sectionLetter] {
+            return sectionItems
+        }
+        let sectionItems = filtredItems.filter {
+            $0.lastName.uppercased().prefix(1) == sectionLetter
+        }
+        cachedSectionItems[sectionLetter] = sectionItems
+        return sectionItems
+    }
+    
+    // получаем конкретного друга для индекспути
+    func getItems(for indexPath: IndexPath) -> User {
+        return getItems(for: indexPath.section)[indexPath.row]
+    }
+    
+    // фильтруем друзей в зависимости от контекста
+    func filterItems(text: String?) {
+        guard let text = text, !text.isEmpty else {
+            filtredItems = allItems
+            return
+        }
+        
+        filtredItems = allItems.filter {
+            $0.fullName.lowercased().contains(text.lowercased())
+        }
+    }
     
     // Mark: - Life cycle
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Setap the Search Controller
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-        
-        tableView.register(UINib(nibName: "HeaderForAllGroup", bundle: nil),  forHeaderFooterViewReuseIdentifier: "HeaderForAllGroup")
-        
-        letterPicker.delegate = self
-        let allLetters = items.map {String($0.name.uppercased().prefix(1)) }
-        letterPicker.letters = Array(Set(allLetters)).sorted()
+        setupAllItems()
+        reloadDataSource()
+        setupViews()
     }
+    
+    // MARK: - Setap
+    
+    private func setupAllItems() {
+        // генерим пользователей сохраняем в allItems
+        allItems = User.randomMany.sorted {
+        $0.fullName.lowercased() < $1.fullName.lowercased()
+        }
+    }
+    
+    private func reloadDataSource() {
+        filterItems(text: searchBar.text)
+        // из этих пользователей получаем уникальный массив букв взятых из фамилии и отсортированных и сохраняем в allLetters
+        let allLetters = filtredItems.map { String($0.lastName.uppercased().prefix(1)) }
+        sections = Array(Set(allLetters)).sorted()
+        
+        cachedSectionItems = [:] // обнуляем кэш
+    }
+    
+    private func setupViews() {
+        letterPicker.delegate = self
+        letterPicker.letters = sections
+        }
+    
     // Mark: - Segues
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard
-        let controller = segue.destination as? PhotosViewController,
-        let indexPath = tableView.indexPathForSelectedRow
+            let controller = segue.destination as? PhotosViewController,
+            let indexPath = tableView.indexPathForSelectedRow
         else { return }
         
-        let item = items[indexPath.row]
+        let item = getItems(for: indexPath)
         controller.photos = item.photos
-        controller.title = item.name
+        controller.title = item.fullName
     }
     
-    //Mark: - Table View
+    // Mark: - Table View
     
-    //название секции
-   /* func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
-    }
-    
-    //количество секций
     func numberOfSections(in tableView: UITableView) -> Int {
-        
+        return sections.count
     }
-    */
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
-    }//количество строк секции
+        return getItems(for: section).count
+    } //количество строк секции
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FreindCell //Fc -т к у нас кастомная ячейка
-        let item = items[indexPath.row]
         
+        let item = getItems(for: indexPath)
         cell.avatarView.image = UIImage(named: "Avatars/\(item.avatar)")
-        cell.nameLabel.text = item.name
-        
+        cell.nameLabel.text = item.fullName
         return cell
-    }//формирование самой ячейки
+    } //формирование самой ячейки
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section]
+    } // вывод секции (сделать бэкграунд с методом viewForHeader...)
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        50
+    }
+//   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//    let headerView : UIView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 0))
+//    headerView.backgroundColor = UIColor.seemuBlue
+//
+//    let headerLabel : UILabel = UILabel(frame: CGRect(x: 100, y: 1, width: 140, height: 28))
+
+//    headerView .addSubview(headerLabel)
+//    return headerView
+//    }
     
     // Mark: - LetterPickerDelegate
     
     func letterPicked(_ letter: String) {
-        guard let index = items
-                .firstIndex(where: { $0.name.lowercased().prefix(1) == letter.lowercased() }) else { return }
-        let indexPath = IndexPath(row: index, section: 0)
+        guard  let sectionIndex = sections.firstIndex(where: { $0 == letter}) else { return }
+        
+        let indexPath = IndexPath(row: 0, section: sectionIndex)
         tableView.scrollToRow(at: indexPath, at: .top, animated: true)
     }
     
-   /* func createFreindDict(){
-        for item in items {
-            let itemKey = item.substingToIndex(item.startIndex.advanceBy(1))
-            if var itemValues = freindDict[itemKey] {
-                itemValues.append(item)
-                freindDict[itemKey] = itemValues
-            }
-        }
-    }
-    */
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "HeaderForAllGroup") as? HeaderForAllGroup else { return nil }
-        return headerView
-        
-    }
 }
 
 extension FreindsTableViewController: UISearchResultsUpdating {
@@ -117,5 +153,11 @@ extension FreindsTableViewController: UISearchResultsUpdating {
         print(#function)
     }
     
+    // MARK: - UISearchBarDelegate
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        reloadDataSource()
+        tableView.reloadData()
+        letterPicker.letters = sections
+    }
 }

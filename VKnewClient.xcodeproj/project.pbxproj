@@ -23,8 +23,6 @@
 		2E8D36C0253D8D7B00819D9B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8D36BF253D8D7B00819D9B /* User.swift */; };
 		2EC13B00254839D9007CE8F8 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC13AFF254839D9007CE8F8 /* AvatarView.swift */; };
 		2EC13B0325484714007CE8F8 /* FreindCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC13B0225484714007CE8F8 /* FreindCell.swift */; };
-		2EC4F72C254DC76B0004761F /* HeaderForAllGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4F72B254DC76A0004761F /* HeaderForAllGroup.swift */; };
-		2EC4F72F254DC7BA0004761F /* HeaderForAllGroup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EC4F72E254DC7BA0004761F /* HeaderForAllGroup.xib */; };
 		2EC4F733254DFFF90004761F /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4F732254DFFF90004761F /* NewsCell.swift */; };
 		2EC4F736254E00890004761F /* NewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EC4F735254E00880004761F /* NewsCell.xib */; };
 		2EE3B1C025441FFC007B378F /* FreindsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE3B1BF25441FFC007B378F /* FreindsTableViewController.swift */; };
@@ -56,8 +54,6 @@
 		2E8D36BF253D8D7B00819D9B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2EC13AFF254839D9007CE8F8 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		2EC13B0225484714007CE8F8 /* FreindCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreindCell.swift; sourceTree = "<group>"; };
-		2EC4F72B254DC76A0004761F /* HeaderForAllGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderForAllGroup.swift; sourceTree = "<group>"; };
-		2EC4F72E254DC7BA0004761F /* HeaderForAllGroup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderForAllGroup.xib; sourceTree = "<group>"; };
 		2EC4F732254DFFF90004761F /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 		2EC4F735254E00880004761F /* NewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsCell.xib; sourceTree = "<group>"; };
 		2EE3B1BF25441FFC007B378F /* FreindsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreindsTableViewController.swift; sourceTree = "<group>"; };
@@ -162,8 +158,6 @@
 				2EE3B1CA2544373E007B378F /* PhotoCell.swift */,
 				2EC13B0225484714007CE8F8 /* FreindCell.swift */,
 				2EFA31C02549F842004A42F2 /* GroupCell.swift */,
-				2EC4F72B254DC76A0004761F /* HeaderForAllGroup.swift */,
-				2EC4F72E254DC7BA0004761F /* HeaderForAllGroup.xib */,
 				2EC4F732254DFFF90004761F /* NewsCell.swift */,
 				2EC4F735254E00880004761F /* NewsCell.xib */,
 			);
@@ -238,7 +232,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2EC4F72F254DC7BA0004761F /* HeaderForAllGroup.xib in Resources */,
 				2E8D365D2539D38100819D9B /* LaunchScreen.storyboard in Resources */,
 				2EC4F736254E00890004761F /* NewsCell.xib in Resources */,
 				2E8D365A2539D38100819D9B /* Assets.xcassets in Resources */,
@@ -270,7 +263,6 @@
 				2E8D3671253A3DED00819D9B /* LoginViewController.swift in Sources */,
 				2E8D36512539D37D00819D9B /* AppDelegate.swift in Sources */,
 				2E8D36532539D37D00819D9B /* SceneDelegate.swift in Sources */,
-				2EC4F72C254DC76B0004761F /* HeaderForAllGroup.swift in Sources */,
 				2E8D36B7253C36AE00819D9B /* MyGroupsViewController.swift in Sources */,
 				2E8D36C0253D8D7B00819D9B /* User.swift in Sources */,
 				2E32190F254877EB006461B1 /* LikeControl.swift in Sources */,

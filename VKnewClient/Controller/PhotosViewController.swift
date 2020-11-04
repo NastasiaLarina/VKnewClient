@@ -8,22 +8,23 @@
 import UIKit
 
 class PhotosViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-
+    
+    // MARK: - Data source
+    
     var photos: [String] = []
     
-    //Mark: - Life cycles
-    
-    
+    //MARK: - Life cycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
+    
     private enum Constants {
         static let padding: CGFloat = 5 // задаем отступы которые можем многократно использовать в проекте
         static let columns: CGFloat = 2 // количество колонок
     }
-    // MARK: UICollectionViewDataSource
+    // MARK: - Collection View 
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1

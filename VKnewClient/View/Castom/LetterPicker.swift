@@ -94,6 +94,8 @@ class LetterPicker: UIView {
         let buttonHeight = bounds.height / CGFloat(buttons.count)
         let buttonIndex = Int(anchorPoint.y / buttonHeight)
         
+        guard buttonIndex >= 0 && buttonIndex < buttons.count else { return}
+        
         let button = buttons[buttonIndex]
         unhiglightButtons()//убираем все подсветки
         button.isHighlighted = true
