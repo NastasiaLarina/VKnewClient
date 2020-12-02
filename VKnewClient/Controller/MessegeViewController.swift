@@ -11,9 +11,14 @@ class MessegeViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
 
     }
 
+    @IBOutlet weak var image: UIImageView!
+    
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {

@@ -9,6 +9,7 @@ import UIKit
 
 class FreindsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, LetterPickerDelegate, UISearchBarDelegate {
     
+    var photos: [String] = []
     
     // MARK: - Outlets
     
@@ -16,7 +17,7 @@ class FreindsTableViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var letterPicker: LetterPicker!
     @IBOutlet weak var searchBar: UISearchBar!
     
-   // MARK: - Data Sourse
+    // MARK: - Data Sourse
     
     var sections: [String] = [] // массив букв
     var allItems: [User] = [] // массив всех друзей
@@ -56,12 +57,15 @@ class FreindsTableViewController: UIViewController, UITableViewDataSource, UITab
     
     // Mark: - Life cycle
     
+  
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupAllItems()
         reloadDataSource()
         setupViews()
+        
     }
     
     // MARK: - Setap
@@ -69,7 +73,7 @@ class FreindsTableViewController: UIViewController, UITableViewDataSource, UITab
     private func setupAllItems() {
         // генерим пользователей сохраняем в allItems
         allItems = User.randomMany.sorted {
-        $0.fullName.lowercased() < $1.fullName.lowercased()
+            $0.fullName.lowercased() < $1.fullName.lowercased()
         }
     }
     
@@ -78,26 +82,26 @@ class FreindsTableViewController: UIViewController, UITableViewDataSource, UITab
         // из этих пользователей получаем уникальный массив букв взятых из фамилии и отсортированных и сохраняем в allLetters
         let allLetters = filtredItems.map { String($0.lastName.uppercased().prefix(1)) }
         sections = Array(Set(allLetters)).sorted()
-        
         cachedSectionItems = [:] // обнуляем кэш
     }
     
     private func setupViews() {
         letterPicker.delegate = self
         letterPicker.letters = sections
-        }
+    }
     
     // Mark: - Segues
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard
-            let controller = segue.destination as? PhotosViewController,
+            let controller = segue.destination as? GaleryViewController,
             let indexPath = tableView.indexPathForSelectedRow
         else { return }
         
         let item = getItems(for: indexPath)
         controller.photos = item.photos
         controller.title = item.fullName
+       
     }
     
     // Mark: - Table View
@@ -115,27 +119,24 @@ class FreindsTableViewController: UIViewController, UITableViewDataSource, UITab
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FreindCell //Fc -т к у нас кастомная ячейка
         
         let item = getItems(for: indexPath)
-        cell.avatarView.image = UIImage(named: "Avatars/\(item.avatar)")
+        cell.avatarView.image = UIImage.loadAvatar(item.avatar)
         cell.nameLabel.text = item.fullName
         return cell
     } //формирование самой ячейки
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section]
-    } // вывод секции (сделать бэкграунд с методом viewForHeader...)
+    } // вывод секции 
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        50
+        40
     }
-//   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//    let headerView : UIView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 0))
-//    headerView.backgroundColor = UIColor.seemuBlue
-//
-//    let headerLabel : UILabel = UILabel(frame: CGRect(x: 100, y: 1, width: 140, height: 28))
-
-//    headerView .addSubview(headerLabel)
-//    return headerView
-//    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = UIColor.lightBlue
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.black
+    }
     
     // Mark: - LetterPickerDelegate
     
@@ -160,4 +161,6 @@ extension FreindsTableViewController: UISearchResultsUpdating {
         tableView.reloadData()
         letterPicker.letters = sections
     }
+    
+    
 }

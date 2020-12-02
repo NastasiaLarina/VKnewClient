@@ -10,7 +10,9 @@ import UIKit
 extension UIColor {
     
     static let seemuBlue = UIColor(red: 74, green: 134, blue: 204, a: 1.0)
-
+    
+    static let lightBlue = UIColor(red: 231, green: 237, blue: 243, a: 1.0)
+    
     convenience init(red: Int, green: Int, blue: Int, a: CGFloat = 1.0) {
         self.init(
             red: CGFloat(red) / 255.0,

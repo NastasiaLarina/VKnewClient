@@ -76,4 +76,9 @@ class AllGroupsViewController: UITableViewController, UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(#function)
     }
+    
+//    let toViewController = segue.destination as UIViewController
+//
+//    // 2
+//    toViewController.transitioningDelegate = self.transitionManager}
 }

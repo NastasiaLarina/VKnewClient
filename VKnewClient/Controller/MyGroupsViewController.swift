@@ -9,7 +9,7 @@
 import UIKit
 
 class MyGroupsViewController: UITableViewController {
-
+    
     
     // MARK: - Data Sourse
     
@@ -17,6 +17,7 @@ class MyGroupsViewController: UITableViewController {
     var groupFoto: [String] = []
     
     // MARK: - Life cicles
+    let transitionManager = TransitionManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,12 +25,12 @@ class MyGroupsViewController: UITableViewController {
     }
     
     // MARK: - Table view
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return allGroups.count
@@ -48,8 +49,7 @@ class MyGroupsViewController: UITableViewController {
         
         return cell
     }
-    
-    //
+  
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             allGroups.remove(at: indexPath.row)
@@ -74,6 +74,6 @@ class MyGroupsViewController: UITableViewController {
         tableView.reloadData()
         groupFoto.append(fotoGroup)
         tableView.reloadData()
-       }
+    }
     
 }

@@ -8,35 +8,26 @@
 import UIKit
 
 class NewsViewController: UITableViewController, UISearchBarDelegate {
-
+    
+    let news = NewsItem.fake
+    
     // MARK: - Outlets
     
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchView: SearchView!
     
-    // Mark: - Life cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    // MARK: - Table view
-        
-        tableView.register(UINib(nibName: "NewsCell", bundle: nil),  forHeaderFooterViewReuseIdentifier: "NewsCell")
-        
-    }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
+        
+    // MARK: -
+        
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+            return news.count
+        }
+        
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NewsViewCell
+        cell.configure(item: news[indexPath.row])
+        return cell
+        }
+        
     }
-    
-    // MARK: - UISearchBarDelegate
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(#function)
-    }
-}
+

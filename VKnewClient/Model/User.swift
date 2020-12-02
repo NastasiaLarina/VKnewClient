@@ -20,12 +20,12 @@ struct User {
     
     static var randomOne: User {
         return User(firstName: Lorem.firstName,
-                    lastName: Lorem.lastName,                    avatar: String(Int.random(in: 1...18)),
-                    photos: (1...6).map { _ in String(Int.random(in: 1...18)) }
+                    lastName: Lorem.lastName,                    avatar: String(Int.random(in: 1...20)),
+                    photos: (1...8).map { _ in String(Int.random(in: 1...20)) }
        )
     }
     static var randomMany: [User] {
-        return (1...18).map { _ in User.randomOne }
+        return (1...20).map { _ in User.randomOne }
     }
     
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-
+@IBDesignable
 class LikeControl: UIControl {
     
     @IBInspectable
@@ -26,7 +26,7 @@ class LikeControl: UIControl {
     }
     
     @IBInspectable
-    var color: UIColor = .blue {
+    var color: UIColor = .seemuBlue {
         didSet {
             likeButton.tintColor = color
             countLabel.textColor = color
@@ -49,7 +49,7 @@ class LikeControl: UIControl {
     lazy var countLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .blue
+        label.textColor = color
         label.text = "0"
         return label
     }()
@@ -67,14 +67,14 @@ class LikeControl: UIControl {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setap()
+        setup()
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setap()
+        setup()
     }
     
-    private func setap() {
+    private func setup() {
         addSubview(stackView)
         
         NSLayoutConstraint.activate([
@@ -93,6 +93,19 @@ class LikeControl: UIControl {
     @objc private func likeButtonTapped(_ sender: UIButton){
         isliked.toggle() // поменять значение
         sendActions(for: .valueChanged)
+        transform = CGAffineTransform(scaleX: 2, y: 2)
+        
+        UIView.animate(withDuration: 1,
+                       delay: 0,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0,
+                       options: [],
+                       animations: {
+                            self.transform = .identity
+                       },
+                       completion: nil
+        )
+        
     }
     
     private func updateLike() {

@@ -8,12 +8,20 @@
 import UIKit
 
 class ViewPhotoController: UIViewController {
-
+    
     var currentPhoto: UIImage!
     
     // MARK: - Outlets
     
     @IBOutlet private weak var imageViewPreview: UIImageView!
+    
+    // MARK: - Actions
+    
+    
+    @IBAction func actionTapped(_ sender: UIImageView) {
+        
+        
+    }
     
     // MARK: - Life cicle
     
@@ -26,6 +34,8 @@ class ViewPhotoController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.imageViewPreview.image = currentPhoto;
+        
+        
     }
-
+    
 }
